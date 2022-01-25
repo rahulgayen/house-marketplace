@@ -1,9 +1,12 @@
 import { FaUser, FaLock, FaEye, FaChevronRight, FaIdCardAlt } from "react-icons/fa";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { db } from '../firebase.config'
 function SignIn() {
+    const navigate = useNavigate();
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [formData, setFormData] = useState({ name: "", email: "", password: "" });
     const { name, email, password } = formData;
@@ -16,13 +19,17 @@ function SignIn() {
         event.preventDefault();
         try {
             const auth = getAuth();
-            console.log(auth)
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-            console.log(userCredential);
             updateProfile(auth.currentUser, {
                 displayName: name
-            })
+            });
+            const formDataCopy = { ...formData };
+            delete formDataCopy.password;
+            formDataCopy.timestamp = serverTimestamp();
+            setDoc(doc(db, "users", user.uid), formDataCopy);
+            setFormData({ name: "", email: "", password: "" });
+            navigate("/signin");
         }
         catch (error) {
             console.log(error);
