@@ -1,10 +1,12 @@
 import { FaUser, FaLock, FaEye, FaChevronRight, FaIdCardAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
-import { db } from '../firebase.config'
+import { db } from "../firebase.config";
+import OAuth from "../components/OAuth";
 function SignIn() {
     const navigate = useNavigate();
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -22,7 +24,7 @@ function SignIn() {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             updateProfile(auth.currentUser, {
-                displayName: name
+                displayName: name,
             });
             const formDataCopy = { ...formData };
             delete formDataCopy.password;
@@ -30,11 +32,18 @@ function SignIn() {
             setDoc(doc(db, "users", user.uid), formDataCopy);
             setFormData({ name: "", email: "", password: "" });
             navigate("/signin");
+        } catch (error) {
+            toast.error("Sign Up Error", {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+            });
         }
-        catch (error) {
-            console.log(error);
-        }
-    }
+    };
     return (
         <div className="pt-4 px-4 bg-gray-200 h-screen">
             <h2 className="text-2xl font-bold">Welcome Back!</h2>
@@ -64,9 +73,9 @@ function SignIn() {
                         }}
                     />
                 </div>
-                <Link to="/forgot-password" className="text-green-600 font-bold place-self-end">
+                {/* <Link to="/forgot-password" className="text-green-600 font-bold place-self-end">
                     Forgot Password
-                </Link>
+                </Link> */}
                 <div className="flex justify-between">
                     <h2 className="text-lg font-bold">Sign Up</h2>
                     <button className="h-8 w-8 rounded-full text-white bg-green-600 flex justify-center items-center">
@@ -74,6 +83,7 @@ function SignIn() {
                     </button>
                 </div>
             </form>
+            <OAuth />
             <div className="flex justify-center mt-8">
                 <Link to="/signin" className="mx-auto text-green-600 font-bold text-xs place-self-end">
                     Sign In instead

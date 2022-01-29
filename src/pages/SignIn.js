@@ -1,7 +1,11 @@
 import { FaUser, FaLock, FaEye, FaChevronRight } from "react-icons/fa";
+import { toast } from "react-toastify";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+//import { useAuthStatus } from "../hooks/useAuthStatus";
+import OAuth from "../components/OAuth";
+
 function SignIn() {
     const navigate = useNavigate();
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -23,9 +27,18 @@ function SignIn() {
                 navigate("/");
             }
         } catch (e) {
-            console.log(e);
+            toast.error("Invalid Credentials", {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+            });
         }
     };
+
     return (
         <div className="pt-4 px-4 bg-gray-200 h-screen">
             <h2 className="text-2xl font-bold">Welcome Back!</h2>
@@ -61,6 +74,7 @@ function SignIn() {
                     </button>
                 </div>
             </form>
+            <OAuth />
             <div className="flex justify-center mt-8">
                 <Link to="/signup" className="mx-auto text-green-600 font-bold text-xs place-self-end">
                     Sign Up instead
