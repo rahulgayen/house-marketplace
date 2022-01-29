@@ -37,7 +37,7 @@ function Profile() {
         });
     };
     return (
-        <div className="bg-gray-200 h-screen pt-4 px-4">
+        <div className="bg-gray-200 h-screen pt-4 px-8">
             <header className="flex justify-between ">
                 <h2 className="text-2xl font-bold">My Profile</h2>
                 <button className="bg-green-600 py-1 px-2 text-xs text-white font-semibold rounded-lg" onClick={Signout}>

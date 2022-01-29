@@ -4,7 +4,7 @@ import { collection, query, where, getDocs, orderBy, limit, startAfter, limitToL
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import ListingItem from "../components/ListingItem";
-function Offers() {
+function Category() {
     const [listings, setListings] = useState(null);
     const [loading, setLoading] = useState(true);
     const params = useParams();
@@ -12,7 +12,7 @@ function Offers() {
         const fetchListings = async () => {
             try {
                 const listingsRef = collection(db, "listings");
-                const q = query(listingsRef, where("offer", "==", true), orderBy("timestamp", "desc"), limit(10));
+                const q = query(listingsRef, where("type", "==", params.categoryName), orderBy("timestamp", "desc"), limit(10));
                 const querySnapshot = await getDocs(q);
                 const listings = [];
 
@@ -35,7 +35,7 @@ function Offers() {
     return (
         <div className="pt-4 px-8 bg-gray-200 h-screen">
             <header>
-                <h2 className="text-2xl font-bold">Offers</h2>
+                <h2 className="text-2xl font-bold">Places for {params.categoryName}</h2>
             </header>
             {loading ? (
                 <h2>Loading...</h2>
@@ -48,10 +48,10 @@ function Offers() {
                     </ul>
                 </main>
             ) : (
-                <h2 className="mt-8 text-md font-bold">No Current Offers</h2>
+                <h2 className="mt-8 text-md font-bold">No Listing for {params.categoryName}</h2>
             )}
         </div>
     );
 }
 
-export default Offers;
+export default Category;
