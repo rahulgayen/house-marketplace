@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { getAuth, updateProfile, signOut } from "firebase/auth";
-
+import { FaHome, FaChevronRight } from "react-icons/fa"
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 function Profile() {
     const auth = getAuth();
 
@@ -12,10 +12,9 @@ function Profile() {
     const [userDetails, setUserDetails] = useState({ name: auth.currentUser.displayName, email: auth.currentUser.email });
     const { name, email } = userDetails;
 
-
     const Signout = () => {
         signOut(auth);
-        navigate("/signin")
+        navigate("/signin");
     };
     const onSubmit = async () => {
         try {
@@ -26,7 +25,7 @@ function Profile() {
                 const userRef = doc(db, "users", auth.currentUser.uid);
 
                 await updateDoc(userRef, {
-                    name
+                    name,
                 });
             }
         } catch (error) { }
@@ -37,29 +36,38 @@ function Profile() {
         });
     };
     return (
-        <div className="bg-gray-200 h-screen pt-4 px-8">
+        <div className="bg-gray-200 h-screen pt-4 px-4">
             <header className="flex justify-between ">
                 <h2 className="text-2xl font-bold">My Profile</h2>
                 <button className="bg-green-600 py-1 px-2 text-xs text-white font-semibold rounded-lg" onClick={Signout}>
                     Logout
                 </button>
             </header>
-            <div className="flex justify-between mt-4">
-                <h2 className="font-regular">Personal Details</h2>
-                <h2
-                    className="cursor-pointer font-xs font-semibold text-green-600"
-                    onClick={() => {
-                        changeDetails && onSubmit();
-                        setChangeDetails((prev) => !prev);
-                    }}
-                >
-                    {changeDetails ? "done" : "change"}
-                </h2>
-            </div>
-            <form className="mt-4 flex flex-col gap-2" onSubmit={onSubmit}>
-                <input type="text" id="name" disabled={!changeDetails} className="px-4 bg-white rounded-lg focus:outline-none" value={name} onChange={onChange} />
-                <input type="text" id="email" disabled={!changeDetails} className="px-4 bg-white rounded-lg focus:outline-none" value={email} onChange={onChange} />
-            </form>
+            <main>
+                <div className="flex justify-between mt-4">
+                    <h2 className="font-semibold">Personal Details</h2>
+                    <h2
+                        className="cursor-pointer font-xs font-semibold text-green-600"
+                        onClick={() => {
+                            changeDetails && onSubmit();
+                            setChangeDetails((prev) => !prev);
+                        }}
+                    >
+                        {changeDetails ? "done" : "change"}
+                    </h2>
+                </div>
+                <form className="mt-4 flex flex-col " onSubmit={onSubmit}>
+                    <input type="text" id="name" disabled={!changeDetails} className="px-4 pt-2 bg-white rounded-lg rounded-b-none focus:outline-none" value={name} onChange={onChange} />
+                    <input type="text" id="email" disabled={!changeDetails} className="px-4 pb-2 bg-white rounded-lg rounded-t-none focus:outline-none" value={email} onChange={onChange} />
+                </form>
+                <Link to="/create-listing">
+                    <div className="mt-4 w-full bg-white rounded-lg px-4 py-2 flex">
+                        <FaHome className="font-bold" />
+                        <p className="grow text-sm font-bold text-center">Rent or Sell you Place</p>
+                        <FaChevronRight className="font-bold" />
+                    </div>
+                </Link>
+            </main>
         </div>
     );
 }

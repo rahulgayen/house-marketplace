@@ -40,7 +40,7 @@ function SignIn() {
     };
 
     return (
-        <div className="pt-4 px-8 bg-gray-200 h-screen">
+        <div className="pt-4 px-4 bg-gray-200 h-screen">
             <h2 className="text-2xl font-bold">Welcome Back!</h2>
             <form className="mt-8 flex flex-col gap-4" onSubmit={onSubmit}>
                 <div className="bg-white rounded-lg h-8 relative px-8">

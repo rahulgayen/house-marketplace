@@ -4,11 +4,11 @@ function ListingItem({ id, listing }) {
     return (
         <div className="mt-2">
             <Link to={`/category/${listing.type}/${id}`}>
-                <div className="grid grid-cols-listing gap-4">
-                    <img src={listing.imageUrls[0]} alt={listing.name} className="w-full object-cover rounded-xl" />
+                <div className="grid grid-cols-listing gap-4 mb-4">
+                    <img src={listing.imageUrls[0]} alt={listing.name} className="w-full object-cover rounded-xl h-full" />
                     <div className="flex flex-col gap-1">
                         <h2 className="text-xs font-semibold">{listing.location}</h2>
-                        <h2 className="text-lg font-bold">{listing.name}</h2>
+                        <h2 className="text-base font-bold">{listing.name}</h2>
                         <p className="text-sm text-green-600 font-bold">
                             {listing.offer
                                 ? new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(listing.discountedPrice)

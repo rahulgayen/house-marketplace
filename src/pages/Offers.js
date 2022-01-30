@@ -33,7 +33,7 @@ function Offers() {
         fetchListings();
     }, []);
     return (
-        <div className="pt-4 px-8 bg-gray-200 h-screen">
+        <div className="pt-4 px-4 bg-gray-200 h-screen">
             <header>
                 <h2 className="text-2xl font-bold">Offers</h2>
             </header>

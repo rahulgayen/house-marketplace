@@ -3,7 +3,7 @@ import RentCategoryImage from "../assets/jpg/rentCategoryImage.jpg";
 import SellCategoryImage from "../assets/jpg/sellCategoryImage.jpg";
 function Explore() {
     return (
-        <div className="pt-4 px-8 bg-gray-200 h-screen">
+        <div className="pt-4 px-4 bg-gray-200 h-screen">
             <header>
                 <h2 className="text-2xl font-bold">Explore</h2>
             </header>
