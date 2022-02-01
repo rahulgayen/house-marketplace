@@ -5,7 +5,7 @@ function Navbar() {
     const location = useLocation();
     /* console.log(location.pathname) */
     return (
-        <div className="sticky bottom-0 left-0 w-full bg-white py-2 grid grid-cols-3">
+        <div className="sticky bottom-0 left-0 z-10 w-full bg-white py-2 grid grid-cols-3">
             <Link to="/" className="w-full flex flex-col gap-1 items-center justify-center">
                 <FaCompass className={`text-xl ` + (location.pathname === '/' ? 'text-green-600' : '')} />
                 <h2 className={`text-xs ` + (location.pathname === '/' ? 'text-green-600' : '')}>Explore</h2>

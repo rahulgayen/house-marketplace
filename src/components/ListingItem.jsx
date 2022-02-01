@@ -16,9 +16,9 @@ function ListingItem({ id, listing }) {
                             / Month
                         </p>
                         <div className="flex justify-start gap-4">
-                            <FaBed className="font-bold text-sm" />
+                            <FaBed className="font-bold text-xs" />
                             <p className="text-xs font-bold">{listing.bedrooms}{listing.bedrooms > 1 ? ' bedrooms' : ' bedroom'}</p>
-                            <FaBath className="font-bold text-sm" />
+                            <FaBath className="font-bold text-xs" />
                             <p className="text-xs font-bold">{listing.bathrooms}{listing.bathrooms > 1 ? ' bathrooms' : ' bathroom'}</p>
                         </div>
                     </div>
